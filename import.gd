@@ -4,7 +4,7 @@ extends EditorImportPlugin
 enum Presets { DEFAULT }
 
 func get_importer_name():
-	return "starriver.allegro_bmp_font"
+	return "dt.gabfip"
 
 func get_visible_name():
 	return "BitmapFont (Allegro)"
