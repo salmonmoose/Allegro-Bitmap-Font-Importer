@@ -34,13 +34,15 @@ Now, let's look at how the importer interprets it:
 
 * Each '`.`' in the above is a **background colour** pixel. The top-leftmost pixel defines this colour, and every **outside pixel** in the image must be the background colour.
   * In the PNG above, the background colour is mid-grey (`#7f7f7f`).
+  * This **shouldn't be transparent** (see the below note).
 * Glyphs can vary in width, but must be the **same height**.
 * Every row of glyphs must be separated by a horizontal line with the background colour.
 * Glyphs are added without spacing, so if you want that, you'll need to add it to the end of each character.
+  * You'll notice we've done that above.
   * I'm aware that `BitmapFont` provides this facility, but as it stands, the importer just replicates Allegro's functionality. More bells and whistles of this variety may be added in future.
 * It's fine to put more than 1 vertical line of the background colour between glyphs.
 
-> Note: contrary to the above PNG, you'll generally want to make the glyphs translucent - or they'll be drawn opaque. (we've just used a black background so you can see it on the page!)
+> Note: contrary to the above PNG, you'll generally want to make the glyphs themselves a transparent background - or they'll be drawn opaque. (we've just used a black background so you can see it on the page!)
 
 Even with all of the above, the importer still doesn't know which glyphs correspond to which characters. This leads us onto...
 
