@@ -2,6 +2,8 @@
 
 Godot Allegro Bitmap Font Importer Plugin. Requires Godot 3.2+.
 
+![Diagram](./.images/diagram.png)
+
 This provides an importer for [BitmapFont](https://docs.godotengine.org/en/3.2/classes/class_bitmapfont.html) resources from plain PNG images, similarly to [Allegro](https://liballeg.org/)'s [`al_grab_font_from_bitmap`](https://liballeg.org/a5docs/trunk/font.html#al_grab_font_from_bitmap) function.
 
 This allows you to create bitmap fonts in a normal image editor, which is particularly useful for pixel fonts and such. No [BMFont](https://www.angelcode.com/products/bmfont/) required.
