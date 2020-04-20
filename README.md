@@ -12,39 +12,23 @@ This allows you to create bitmap fonts in a normal image editor, which is partic
 
 > Note: this is heavily adapted from [Allegro's documentation](https://liballeg.org/a5docs/trunk/font.html#al_grab_font_from_bitmap).
 
-Let's explain this by example. Here's a valid (albeit tiny) PNG which specifies a 5x5 pixel font for the glyphs `A` to `F`:
+Let's explain this by example. Here's a valid (albeit tiny) PNG pixel font for the glyphs `123` and `ABC`:
 
 ![Example](./.images/example.png)
 
-Now, let's look at how the importer interprets it:
+Now, let's look at how the importer interprets it. Here's that image scaled-up:
 
-```
-......................
-.AAAAA .BBBB  .CCCCC .
-.A   A .B   B .C     .
-.AAAAA .BBBBB .C     .
-.A   A .B   B .C     .
-.A   A .BBBBB .CCCCC .
-......................
-.DDDD  .EEEEE .FFFFF .
-.D   D .E     .F     .
-.D   D .EEEE  .FFFF  .
-.D   D .E     .F     .
-.DDDDD .EEEEE .F     .
-......................
-```
+![Example at 16x scale](./.images/example-large.png)
 
-* Each '`.`' in the above is a **delimiter colour** pixel. The top-leftmost pixel defines this colour, and every **outside pixel** in the image must be the delimiter colour.
+* The top-leftmost pixel defines the **delimiter colour**. Every outside pixel in the image must also be this colour.
   * In the PNG above, the delimiter colour is mid-grey (`#7f7f7f`).
-  * This **shouldn't be transparent** (see the below note).
+  * This **shouldn't be transparent**. Instead - unlike the above - your glyphs should have transparent backgrounds, because the backgrounds will be drawn too! We've just used black so you can see it on the page.
 * Glyphs can vary in width, but must be the **same height**.
 * Every row of glyphs must be separated by a horizontal line with the delimiter colour.
 * Glyphs are added without letter spacing, so if you want that, you'll need to add it to the end of each character.
   * You'll notice we've done that above.
   * I'm aware that `BitmapFont` provides this facility, but as it stands, the importer just replicates Allegro's functionality. More bells and whistles of this variety may be added in future.
 * It's fine to put as much delimiter colour padding as you like between glyphs on the same row.
-
-> Note: contrary to the above PNG, you'll generally want to give the glyphs a transparent background - otherwise the background will be drawn too. (we've just used a black background so you can see it on the page!)
 
 Even with all of the above, the importer still doesn't know which glyphs correspond to which characters. This leads us onto...
 
