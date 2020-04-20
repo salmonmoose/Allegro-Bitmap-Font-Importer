@@ -42,7 +42,7 @@ func get_option_visibility(_option, _options):
 	return true
 
 
-func import(source_file, save_path, options, platform_variants, gen_files):
+func import(source_file, save_path, options, _platform_variants, _gen_files):
 	# --- validate options ---
 	var ranges := (options.ranges as PoolStringArray)
 	var ranges_n2 = ranges.size()
