@@ -135,6 +135,11 @@ func import(source_file, save_path, options, platform_variants, gen_files):
 		for x in range(image_w):
 			var color := image.get_pixel(x, y)
 
+			# set all bg color pixels to transparent as we iterate. the bg color
+			# bleeds through into the text when it is transformed otherwise (see #1)
+			if color == bg:
+				image.set_pixel(x, y, Color.transparent)
+
 			if bg_line:
 				# if we run into something that isn't the bg color on a
 				# separator line, the image isn't formatted correctly
