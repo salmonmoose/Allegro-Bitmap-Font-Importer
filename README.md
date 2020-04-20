@@ -34,15 +34,15 @@ Now, let's look at how the importer interprets it:
 ......................
 ```
 
-* Each '`.`' in the above is a **background colour** pixel. The top-leftmost pixel defines this colour, and every **outside pixel** in the image must be the background colour.
-  * In the PNG above, the background colour is mid-grey (`#7f7f7f`).
+* Each '`.`' in the above is a **delimiter colour** pixel. The top-leftmost pixel defines this colour, and every **outside pixel** in the image must be the delimiter colour.
+  * In the PNG above, the delimiter colour is mid-grey (`#7f7f7f`).
   * This **shouldn't be transparent** (see the below note).
 * Glyphs can vary in width, but must be the **same height**.
-* Every row of glyphs must be separated by a horizontal line with the background colour.
-* Glyphs are added without spacing, so if you want that, you'll need to add it to the end of each character.
+* Every row of glyphs must be separated by a horizontal line with the delimiter colour.
+* Glyphs are added without letter spacing, so if you want that, you'll need to add it to the end of each character.
   * You'll notice we've done that above.
   * I'm aware that `BitmapFont` provides this facility, but as it stands, the importer just replicates Allegro's functionality. More bells and whistles of this variety may be added in future.
-* It's fine to put more than 1 vertical line of the background colour between glyphs.
+* It's fine to put as much delimiter colour padding as you like between glyphs on the same row.
 
 > Note: contrary to the above PNG, you'll generally want to give the glyphs a transparent background - otherwise the background will be drawn too. (we've just used a black background so you can see it on the page!)
 

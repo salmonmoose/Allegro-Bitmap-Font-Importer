@@ -95,22 +95,22 @@ func import(source_file, save_path, options, platform_variants, gen_files):
 	# --- iterate over source file's pixels ---
 	var image_w := image.get_width()
 	var image_h := image.get_height()
-	var bg: Color
+	var delimiter: Color
 	var font_h := 0
 
 	image.lock()
 
-	# the top-left corner defines the bg color
-	bg = image.get_pixel(0, 0)
+	# the top-left corner defines the delimiter color
+	delimiter = image.get_pixel(0, 0)
 
 	# figure out the font height - start by finding the first glyph
 	for x in range(1, image_w):
-		if image.get_pixel(x, 1) == bg:
+		if image.get_pixel(x, 1) == delimiter:
 			continue
 
-		# ...then how far down we can go before finding the bg color
+		# ...then how far down we can go before finding the delimiter color
 		for y in range(1, image_h):
-			if image.get_pixel(x, y) == bg:
+			if image.get_pixel(x, y) == delimiter:
 				font_h = y - 1
 				break
 		if font_h == 0:
@@ -129,22 +129,23 @@ func import(source_file, save_path, options, platform_variants, gen_files):
 	var glyph_surplus := false
 
 	for y in range(image_h):
-		var bg_line := false
+		var delimiter_line := false
 		var top_line := false
 
 		for x in range(image_w):
 			var color := image.get_pixel(x, y)
 
-			# set all bg color pixels to transparent as we iterate. the bg color
-			# bleeds through into the text when it is transformed otherwise (see #1)
-			if color == bg:
+			# set all delimiter color pixels to transparent as we iterate. the
+			# delimiter color bleeds through into the text when it is transformed
+			# otherwise (see #1)
+			if color == delimiter:
 				image.set_pixel(x, y, Color.transparent)
 
-			if bg_line:
-				# if we run into something that isn't the bg color on a
+			if delimiter_line:
+				# if we run into something that isn't the delimiter color on a
 				# separator line, the image isn't formatted correctly
-				if color != bg:
-					push_error("Pixel on seperator line isn't background color (%s, %s)" % [x, y])
+				if color != delimiter:
+					push_error("Pixel on seperator line isn't delimiter color (%s, %s)" % [x, y])
 					return ERR_FILE_CORRUPT
 				continue
 
@@ -152,18 +153,18 @@ func import(source_file, save_path, options, platform_variants, gen_files):
 				# is this a separator line?
 				var y_in_row := y % (font_h + 1)
 				if y_in_row == 0:
-					bg_line = true
-					if color != bg:
-						push_error("Leftmost pixel isn't background color (%s, %s)" % [x, y])
+					delimiter_line = true
+					if color != delimiter:
+						push_error("Leftmost pixel isn't delimiter color (%s, %s)" % [x, y])
 						return ERR_FILE_CORRUPT
 				elif y_in_row == 1:
 					top_line = true
 				continue
 
-			if (x == image_w - 1) and color != bg:
-				push_error("Rightmost pixel isn't background color (%s, %s)" % [x, y])
+			if (x == image_w - 1) and (color != delimiter):
+				push_error("Rightmost pixel isn't delimiter color (%s, %s)" % [x, y])
 				return ERR_FILE_CORRUPT
-				# note that there's no 'continue' here, as the 'color == bg'
+				# note that there's no 'continue' here, as the 'color == delimiter'
 				# condition below might be needed to cap off a glpyh
 
 			# if this is the top line of a row, we need to glyph positions in
@@ -171,7 +172,7 @@ func import(source_file, save_path, options, platform_variants, gen_files):
 			if top_line:
 				# check whether to add a glyph
 				if not in_glyph:
-					if color != bg:
+					if color != delimiter:
 						# if we've got all specified glyphs, pass over any surplus
 						if glyph_i == glyphs_n:
 							glyph_surplus = true
@@ -181,7 +182,7 @@ func import(source_file, save_path, options, platform_variants, gen_files):
 						glyph_line.push_back([x, null])
 
 				# check whether to cap off a glyph
-				elif color == bg:
+				elif color == delimiter:
 					# end glyph
 					glyph_line.back()[1] = x
 					in_glyph = false
@@ -189,11 +190,11 @@ func import(source_file, save_path, options, platform_variants, gen_files):
 
 			else:
 				# TODO: for absolute pedantry, we should at this point check
-				# there are no background pixels within the glyphs on the
+				# there are no delimiter pixels within the glyphs on the
 				# following lines. for now, this is probably fine though.
 				pass
 
-		if bg_line and (y != 0):
+		if delimiter_line and (y != 0):
 			glyph_lines.push_back(glyph_line)
 			glyph_line = []
 
