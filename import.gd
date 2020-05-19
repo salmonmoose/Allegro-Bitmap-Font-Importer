@@ -230,7 +230,7 @@ func import(source_file, save_path, options, _platform_variants, _gen_files):
 	var flags := 0
 	for option in texture_flags:
 		if options[option]:
-			flags &= texture_flags[option]
+			flags |= texture_flags[option]
 
 	texture.create_from_image(image, flags)
 	font.add_texture(texture)
