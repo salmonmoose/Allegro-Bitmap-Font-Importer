@@ -44,6 +44,8 @@ Then, select 'BitmapFont (Allegro)' from the dropdown:
 
 Each pair of strings in 'Ranges' defines an **inclusive** range of Unicode characters to import from the image. So, in the above screenshot, `123` and `ABC` are imported - meaning these settings would correctly import the font we used as an example.
 
+The other options (from 'Mipmaps' down) correspond to the [texture creation flags](https://docs.godotengine.org/en/3.2/classes/class_texture.html#enum-texture-flags).
+
 Once everything's configured, hit 'Reimport'. Hopefully, that should be it, and you can now use your PNG as a font!
 
 Keep an eye on the console for errors; if the image isn't correctly formatted - or your the number of glyphs specified doesn't match it - you'll be warned about it there.
