@@ -3,6 +3,15 @@ extends EditorImportPlugin
 
 enum Presets { DEFAULT }
 
+# mapping of import options to texture creation flags
+const texture_flags = {
+	mipmaps = Texture.FLAG_MIPMAPS,
+	filter = Texture.FLAG_FILTER,
+	anisotropic_filter = Texture.FLAG_ANISOTROPIC_FILTER,
+	convert_to_linear = Texture.FLAG_CONVERT_TO_LINEAR,
+}
+
+
 func get_importer_name():
 	return "dt.gabfip"
 
@@ -29,12 +38,21 @@ func get_preset_name(preset):
 			return "Unknown"
 
 func get_import_options(preset):
+	var options = [{
+		name = "ranges",
+		default_value = PoolStringArray(["", ""]),
+	}]
+
+	# all other options pertain to texture creation
+	for option in texture_flags:
+		options.append({
+			name = option,
+			default_value = false,
+		})
+
 	match preset:
 		Presets.DEFAULT:
-			return [{
-				name = "ranges",
-				default_value = PoolStringArray(["", ""]),
-			}]
+			return options
 		_:
 			return []
 
@@ -43,7 +61,7 @@ func get_option_visibility(_option, _options):
 
 
 func import(source_file, save_path, options, _platform_variants, _gen_files):
-	# --- validate options ---
+	# --- validate ranges ---
 	var ranges := (options.ranges as PoolStringArray)
 	var ranges_n2 = ranges.size()
 
@@ -208,7 +226,13 @@ func import(source_file, save_path, options, _platform_variants, _gen_files):
 	# --- assemble BitmapFont ---
 	var font := BitmapFont.new()
 	var texture := ImageTexture.new()
-	texture.create_from_image(image)
+
+	var flags := 0
+	for option in texture_flags:
+		if options[option]:
+			flags &= texture_flags[option]
+
+	texture.create_from_image(image, flags)
 	font.add_texture(texture)
 	font.height = font_h
 
