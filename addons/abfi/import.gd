@@ -13,7 +13,7 @@ const texture_flags = {
 
 
 func get_importer_name():
-	return "dt.gabfip"
+	return "dt.abfi"
 
 func get_visible_name():
 	return "BitmapFont (Allegro)"

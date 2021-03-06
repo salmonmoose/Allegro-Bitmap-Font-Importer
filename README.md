@@ -1,10 +1,10 @@
-# gabfip
+# abfi
 
-Godot Allegro Bitmap Font Importer Plugin. Requires Godot 3.2+.
+**Allegro Bitmap Font Importer** plugin for Godot 3.2+.
 
 ![Diagram](./.images/diagram.png)
 
-gabfip provides an importer for [BitmapFont](https://docs.godotengine.org/en/3.2/classes/class_bitmapfont.html) resources from plain PNG images. It aims to implement [Allegro](https://liballeg.org/)'s [`al_grab_font_from_bitmap`](https://liballeg.org/a5docs/trunk/font.html#al_grab_font_from_bitmap) in Godot.
+abfi provides an importer for [BitmapFont](https://docs.godotengine.org/en/3.2/classes/class_bitmapfont.html) resources from plain PNG images. It aims to implement [Allegro](https://liballeg.org/)'s [`al_grab_font_from_bitmap`](https://liballeg.org/a5docs/trunk/font.html#al_grab_font_from_bitmap) in Godot.
 
 This allows you to create bitmap fonts in a normal image editor, which is particularly useful for pixel fonts and such. No [BMFont](https://www.angelcode.com/products/bmfont/) required.
 
@@ -64,11 +64,11 @@ Currently, there are no unit tests. If this plugin gets any bigger, [Gut](https:
 ### Release procedure
 
 * Manually test:
-  * Copy `addons/gabfip` into a fresh Godot project, and load [the example font](./.images/example.png).
+  * Copy `addons/abfi` into a fresh Godot project, and load [the example font](./.images/example.png).
   * Ensure successful import for the example ranges: `1`-`3`, `A`-`C`.
   * Ensure errors are shown for `2`-`3` and `A`-`B`.
   * Check each of the flags works as expected.
-* Bump the version in `addons/gabfip/plugin.cfg`.
+* Bump the version in `addons/abfi/plugin.cfg`.
   * Commit with message `vX.Y.Z`.
   * Add a tag, also `vX.Y.Z`.
   * Note the commit hash.
