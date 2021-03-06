@@ -67,6 +67,7 @@ Currently, there are no unit tests. If this plugin gets any bigger, [Gut](https:
   * Copy `addons/abfi` into a fresh Godot project, and load [the example font](./.images/example.png).
   * Ensure successful import for the example ranges: `1`-`3`, `A`-`C`.
   * Ensure errors are shown for `2`-`3` and `A`-`B`.
+  * Check letter spacing works as expected (both positive and negative).
   * Check each of the flags works as expected.
 * Bump the version in `addons/abfi/plugin.cfg`.
   * Commit with message `vX.Y.Z`.
