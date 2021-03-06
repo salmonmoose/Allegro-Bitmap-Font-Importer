@@ -52,6 +52,23 @@ Keep an eye on the console for errors; if the image isn't correctly formatted - 
 
 > Note: apologies, I'm aware the interface here is a bit janky. It doesn't seem possible to provide detailed property hints for importer options at the moment.
 
+## Development
+
+Currently, there are no unit tests. If this plugin gets any bigger, [gut](https://github.com/bitwes/Gut) may be employed.
+
+### Release procedure
+
+* Manually test:
+  * Copy `addons/gabfip` into a fresh Godot project, and load [the example font](./.images/example.png).
+  * Ensure successful import for the example ranges: `1`-`3`, `A`-`C`.
+  * Ensure errors are shown for `2`-`3` and `A`-`B`.
+  * Check each of the flags works as expected.
+* Bump the version in `addons/gabfip/plguin.cfg`.
+  * Commit with message `vX.Y.Z`.
+  * Add a lightweight tag, also `vX.Y.Z`.
+  * Note the commit hash.
+* [Edit the asset](https://godotengine.org/asset-library/asset/598/edit), updating the commit hash.
+
 ## License
 
 [MIT](./LICENSE)
