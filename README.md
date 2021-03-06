@@ -65,7 +65,7 @@ Currently, there are no unit tests. If this plugin gets any bigger, [Gut](https:
   * Check each of the flags works as expected.
 * Bump the version in `addons/gabfip/plugin.cfg`.
   * Commit with message `vX.Y.Z`.
-  * Add a lightweight tag, also `vX.Y.Z`.
+  * Add a tag, also `vX.Y.Z`.
   * Note the commit hash.
 * [Edit the asset](https://godotengine.org/asset-library/asset/598/edit), updating the commit hash.
 
