@@ -38,10 +38,16 @@ func get_preset_name(preset):
 			return "Unknown"
 
 func get_import_options(preset):
-	var options = [{
-		name = "ranges",
-		default_value = PoolStringArray(["", ""]),
-	}]
+	var options := [
+		{
+			name = "ranges",
+			default_value = PoolStringArray(["", ""]),
+		},
+		{
+			name = "letter_spacing",
+			default_value = 0,
+		},
+	]
 
 	# all other options pertain to texture creation
 	for option in texture_flags:
@@ -227,6 +233,8 @@ func import(source_file, save_path, options, _platform_variants, _gen_files):
 	var font := BitmapFont.new()
 	var texture := ImageTexture.new()
 
+	var spacing := options.letter_spacing as int
+
 	var flags := 0
 	for option in texture_flags:
 		if options[option]:
@@ -242,7 +250,8 @@ func import(source_file, save_path, options, _platform_variants, _gen_files):
 
 		for x in glyph_lines[i]:
 			var rect := Rect2(x[0], y, x[1] - x[0], font_h)
-			font.add_char(glyphs[glyph_i], 0, rect)
+			var advance := -1 if (spacing == 0) else int(rect.size.x + spacing)
+			font.add_char(glyphs[glyph_i], 0, rect, Vector2.ZERO, advance)
 
 			glyph_i += 1
 

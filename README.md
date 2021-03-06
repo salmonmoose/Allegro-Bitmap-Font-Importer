@@ -27,9 +27,6 @@ Now, let's look at how the importer interprets it. Here's that image scaled-up:
   * You'll probably want to arrange the glyphs in their Unicode ordering; you'll see why below.
 * Glyphs can vary in width, but must be the **same height**.
 * Every row of glyphs must be separated by a horizontal line with the delimiter colour.
-* Glyphs are added without letter spacing, so if you want that, you'll need to add it to the end of each character.
-  * You'll notice we've done that above.
-  * I'm aware that `BitmapFont` provides this facility, but as it stands, the importer just replicates Allegro's functionality. More bells and whistles of this variety may be added in future.
 * It's fine to put as much delimiter colour padding as you like between glyphs on the same row.
 
 Even with all of the above, the importer still doesn't know which glyphs correspond to which characters. This leads us onto...
@@ -43,6 +40,14 @@ Then, select 'BitmapFont (Allegro)' from the dropdown:
 ![UI](./.images/ui.png)
 
 Each pair of strings in 'Ranges' defines an **inclusive** range of Unicode characters to import from the image. So, in the above screenshot, `123` and `ABC` are imported - meaning these settings would correctly import the font we used as an example.
+
+---
+
+'Letter Spacing' is useful for padding out characters or pushing them together (if set to a negative value). The latter is especially useful for reducing the spacing on fonts which have an outline:
+
+![Letter spacing demonstration with outline font](./.images/spacing.png)
+
+---
 
 The other options (from 'Mipmaps' down) correspond to the [texture creation flags](https://docs.godotengine.org/en/3.2/classes/class_texture.html#enum-texture-flags).
 
