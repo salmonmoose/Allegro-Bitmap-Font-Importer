@@ -1,5 +1,7 @@
 # abfi
 
+**See `godot4` branch for WIP Godot 4 stuff**
+
 **Allegro Bitmap Font Importer** plugin for Godot 3.2+.
 
 ![Diagram](./.images/diagram.png)
