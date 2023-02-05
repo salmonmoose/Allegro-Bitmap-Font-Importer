@@ -1,6 +1,6 @@
 # abfi
 
-**See `godot4` branch for WIP Godot 4 stuff**
+**See the `godot4` branch for Godot 4.x.**
 
 **Allegro Bitmap Font Importer** plugin for Godot 3.2+.
 
