@@ -223,10 +223,12 @@ func _import(source_file, save_path, options, _platform_variants, _gen_files):
 
 	var spacing := options.letter_spacing as int
 
-	var size := Vector2i(1, 0)
+	var size := Vector2i(font_h, 0)
 	font.set_texture_image(0, size, 0, image)
+	font.fixed_size = font_h
 	font.allow_system_fallback = false
 	font.generate_mipmaps = options.mipmaps
+	font.set_cache_descent(0, size.x, font_h)
 
 	glyph_i = 0
 	for i in range(glyph_lines.size()):
