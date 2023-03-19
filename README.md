@@ -1,14 +1,14 @@
 # abfi
 
-**See the `godot4` branch for Godot 4.x.**
+**Allegro Bitmap Font Importer** plugin for Godot 4.x.
 
-**Allegro Bitmap Font Importer** plugin for Godot 3.2+.
+For Godot 3.x, use [abfi v1.3.0](https://gitlab.com/snoopdouglas/abfi/-/tree/v1.3.0).
 
 ![Diagram](./.images/diagram.png)
 
-abfi provides an importer for [BitmapFont](https://docs.godotengine.org/en/3.2/classes/class_bitmapfont.html) resources from plain PNG images. It aims to implement [Allegro](https://liballeg.org/)'s [`al_grab_font_from_bitmap`](https://liballeg.org/a5docs/trunk/font.html#al_grab_font_from_bitmap) in Godot.
+abfi provides an importer for [FontFile](https://docs.godotengine.org/en/latest/classes/class_fontfile.html#class-fontfile) resources from plain PNG images. It aims to implement [Allegro](https://liballeg.org/)'s [`al_grab_font_from_bitmap`](https://liballeg.org/a5docs/trunk/font.html#al_grab_font_from_bitmap) in Godot.
 
-This allows you to create bitmap fonts in a normal image editor, which is particularly useful for pixel fonts and such. No [BMFont](https://www.angelcode.com/products/bmfont/) required.
+Like the included monospaced bitmap font importer, this allows you to create bitmap fonts in a normal image editor – but without the limitation of monospacing. No [BMFont](https://www.angelcode.com/products/bmfont/) required either!
 
 ## Image format
 
@@ -37,7 +37,7 @@ Even with all of the above, the importer still doesn't know which glyphs corresp
 
 Select a PNG image in the 'FileSystem' tab, then select the 'Import' tab.
 
-Then, select 'BitmapFont (Allegro)' from the dropdown:
+Then, select 'Font data (Allegro)' from the dropdown:
 
 ![UI](./.images/ui.png)
 
