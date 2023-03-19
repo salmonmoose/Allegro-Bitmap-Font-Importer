@@ -2,6 +2,8 @@
 
 **Allegro Bitmap Font Importer** plugin for Godot 4.x.
 
+For Godot 3.x, use [abfi v1.3.0](https://gitlab.com/snoopdouglas/abfi/-/tree/v1.3.0).
+
 ![Diagram](./.images/diagram.png)
 
 abfi provides an importer for [FontFile](https://docs.godotengine.org/en/latest/classes/class_fontfile.html#class-fontfile) resources from plain PNG images. It aims to implement [Allegro](https://liballeg.org/)'s [`al_grab_font_from_bitmap`](https://liballeg.org/a5docs/trunk/font.html#al_grab_font_from_bitmap) in Godot.
