@@ -54,8 +54,9 @@ func _get_import_options(_path, preset):
 func _get_option_visibility(_path, _option, _options):
 	return true
 
-func _get_import_order() -> int:
-	return 0
+func _get_priority() -> float:
+	return 1.0
+
 
 
 func _import(source_file, save_path, options, _platform_variants, _gen_files):
