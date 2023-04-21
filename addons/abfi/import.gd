@@ -4,32 +4,32 @@ extends EditorImportPlugin
 enum Presets { DEFAULT }
 
 
-func _get_importer_name():
+func _get_importer_name() -> String:
 	return "dt.abfi"
 
-func _get_visible_name():
+func _get_visible_name() -> String:
 	return "Font data (Allegro)"
 
-func _get_recognized_extensions():
-	return ["png"]
+func _get_recognized_extensions() -> PackedStringArray:
+	return PackedStringArray(["png"])
 
-func _get_save_extension():
+func _get_save_extension() -> String:
 	return "fontdata"
 
-func _get_resource_type():
+func _get_resource_type() -> String:
 	return "FontFile"
 
-func _get_preset_count():
-	return Presets.size()
+func _get_preset_count() -> int:
+	return 1
 
-func _get_preset_name(preset):
+func _get_preset_name(preset: int) -> String:
 	match preset:
 		Presets.DEFAULT:
 			return "Default"
 		_:
 			return "Unknown"
 
-func _get_import_options(_path, preset):
+func _get_import_options(_path, preset: int) -> Array[Dictionary]:
 	var options := [
 		{
 			name = "ranges",
@@ -51,15 +51,21 @@ func _get_import_options(_path, preset):
 		_:
 			return []
 
-func _get_option_visibility(_path, _option, _options):
+func _get_option_visibility(_path, _option, _options) -> bool:
 	return true
 
 func _get_priority() -> float:
 	return 1.0
 
 
+func _import(
+	source_file: String,
+	save_path: String,
+	options: Dictionary,
+	_platform_variants,
+	_gen_files
+) -> Error:
 
-func _import(source_file, save_path, options, _platform_variants, _gen_files):
 	# --- validate ranges ---
 	var ranges := (options.ranges as PackedStringArray)
 	var ranges_n2 = ranges.size()
