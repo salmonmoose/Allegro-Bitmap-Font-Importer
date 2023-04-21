@@ -30,7 +30,7 @@ func _get_preset_name(preset: int) -> String:
 			return "Unknown"
 
 func _get_import_options(_path, preset: int) -> Array[Dictionary]:
-	var options := [
+	var options: Array[Dictionary] = [
 		{
 			name = "ranges",
 			default_value = PackedStringArray(["", ""]),
@@ -49,10 +49,13 @@ func _get_import_options(_path, preset: int) -> Array[Dictionary]:
 		Presets.DEFAULT:
 			return options
 		_:
-			return []
+			return [] as Array[Dictionary]
 
 func _get_option_visibility(_path, _option, _options) -> bool:
 	return true
+
+func _get_import_order() -> int:
+	return 0
 
 func _get_priority() -> float:
 	return 1.0
