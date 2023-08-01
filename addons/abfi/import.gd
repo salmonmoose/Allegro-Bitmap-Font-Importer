@@ -228,7 +228,7 @@ func _import(
 		push_warning("Missing glyphs from '%c' onwards" % glyphs[glyph_i])
 	elif glyph_surplus:
 		var total := glyphs_n + glyph_surplus
-		push_warning("Read more glyphs than specified in ranges (expected %d, got %d, discarded %d)" % glyphs_n, total, glyph_surplus)
+		push_warning("More glyphs than expected (wanted %d, got %d, discarded %d)" % [glyphs_n, total, glyph_surplus])
 
 	# --- assemble BitmapFont ---
 	var font := FontFile.new()
