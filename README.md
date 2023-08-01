@@ -71,10 +71,11 @@ Currently, there are no unit tests. If this plugin gets any bigger, [Gut](https:
 
 * Manually test:
   * Copy `addons/abfi` into a fresh Godot project, and load [the example font](./.images/example.png).
-  * Ensure successful import for the example ranges: `1`-`3`, `A`-`C`.
-  * Ensure errors are shown for `2`-`3` and `A`-`B`.
+  * Ensure successful import for the example ranges: `1-3`, `A-C`.
+  * Ensure an 'underflow' error is shown for `2-3`, `A-C`.
+  * Ensure an 'overflow' error is shown for `1-3`, `A-D`.
   * Check letter spacing works as expected (both positive and negative).
-  * Check each of the flags works as expected.
+  * Check the mipmaps option works as expected.
 * Bump the version in `addons/abfi/plugin.cfg`.
   * Commit with message `vX.Y.Z`.
   * Add a tag, also `vX.Y.Z`.
