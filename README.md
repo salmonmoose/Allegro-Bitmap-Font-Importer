@@ -84,4 +84,4 @@ Currently, there are no unit tests. If this plugin gets any bigger, [Gut](https:
 
 ## License
 
-[MIT](./LICENSE)
+[ISC](./LICENSE)
