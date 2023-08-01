@@ -33,7 +33,7 @@ func _get_import_options(_path, preset: int) -> Array[Dictionary]:
 	var options: Array[Dictionary] = [
 		{
 			name = "ranges",
-			default_value = PackedStringArray(["", ""]),
+			default_value = PackedStringArray([""]),
 		},
 		{
 			name = "letter_spacing",
@@ -68,40 +68,41 @@ func _import(
 	_platform_variants,
 	_gen_files
 ) -> Error:
-
-	# --- validate ranges ---
+	# --- validate ranges & make list of glyphs ---
 	var ranges := (options.ranges as PackedStringArray)
-	var ranges_n2 = ranges.size()
+	var ranges_n := ranges.size()
 
-	if ranges_n2 == 0:
-		push_error("'ranges' must have elements")
-	if ranges_n2 % 2 != 0:
-		push_error("Size of 'ranges' must be a multiple of two")
+	if ranges_n == 0:
+		push_error("'ranges' must have at least 1 element")
 		return ERR_PARSE_ERROR
 
-	for i in range(ranges_n2):
-		if ranges[i].length() != 1:
-			push_error("Each element of 'ranges' must be a single character")
-			return ERR_PARSE_ERROR
-		# every other string must have a codepoint less than its predecessor
-		if (i % 2) and (ranges[i] < ranges[i-1]):
-			push_error("Every other element of 'ranges' must be higher than its predecessor ('%s' vs '%s')" % [ranges[i-1], ranges[i]])
-			return ERR_PARSE_ERROR
-
-	# --- make list of glyphs ---
-	var ranges_n = ranges_n2 / 2
 	var glyphs := PackedInt64Array([])
 
-	for i in range(ranges_n):
-		var i_from := i*2
-		var i_to   := i_from + 1
-		var from := ranges[i_from].unicode_at(0)
-		var to   := ranges[i_to].unicode_at(0)
+	for i in ranges_n:
+		var r := ranges[i]
+		var len := r.length()
 
-		var j := from
-		while j <= to:
-			glyphs.push_back(j)
-			j += 1
+		if len == 3:
+			if r[1] != "-":
+				push_error("second character of range %d must be a '-'" % i)
+				return ERR_PARSE_ERROR
+
+			var start := r.unicode_at(0)
+			var end := r.unicode_at(2)
+			if start > end:
+				push_error("range %i's start character code is greater than its end" % i)
+				return ERR_PARSE_ERROR
+			if start == end:
+				push_error("range %i's start and end characters are identical" % i)
+				return ERR_PARSE_ERROR
+
+			glyphs.append_array(PackedInt64Array(range(start, end + 1)))
+
+		elif len == 1:
+			glyphs.push_back(r.unicode_at(0))
+		else:
+			push_error("range %i must either be a hyphen-delimited range (eg. A-Z), or a single character" % i)
+			return ERR_PARSE_ERROR
 
 	var glyphs_n := glyphs.size()
 
@@ -151,7 +152,7 @@ func _import(
 	var glyph_i := 0
 	var glyph_lines := []
 	var glyph_line := []
-	var glyph_surplus := false
+	var glyph_surplus := 0
 
 	for y in range(image_h):
 		var delimiter_line := false
@@ -200,7 +201,7 @@ func _import(
 					if color != delimiter:
 						# if we've got all specified glyphs, pass over any surplus
 						if glyph_i == glyphs_n:
-							glyph_surplus = true
+							glyph_surplus += 1
 							continue
 
 						in_glyph = true
@@ -226,7 +227,8 @@ func _import(
 	if glyph_i != glyphs_n:
 		push_warning("Missing glyphs from '%c' onwards" % glyphs[glyph_i])
 	elif glyph_surplus:
-		push_warning("There were more glyphs than specified in 'ranges' (expected %s)" % glyphs_n)
+		var total := glyphs_n + glyph_surplus
+		push_warning("Read more glyphs than specified in ranges (expected %d, got %d, discarded %d)" % glyphs_n, total, glyph_surplus)
 
 	# --- assemble BitmapFont ---
 	var font := FontFile.new()
