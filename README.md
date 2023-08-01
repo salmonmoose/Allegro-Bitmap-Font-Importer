@@ -10,6 +10,20 @@ abfi provides an importer for [FontFile](https://docs.godotengine.org/en/latest/
 
 Like the included monospaced bitmap font importer, this allows you to create bitmap fonts in a normal image editor – but without the limitation of monospacing. No [BMFont](https://www.angelcode.com/products/bmfont/) required either!
 
+## Installation
+
+### From GitLab
+
+* [Download the source from the latest tag.](https://gitlab.com/snoopdouglas/abfi/-/tags)
+* Extract the `addons/` directory into your Godot project.
+* Enable the plugin in your project's settings.
+
+### From the Asset Library
+
+* From the 'AssetLib' tab in Godot, search 'abfi'.
+* Download the plugin.
+* When prompted, select only the `addons/` directory.
+
 ## Image format
 
 Let's explain this by example. Here's a valid (albeit tiny) PNG pixel font for the glyphs `123` and `ABC`:
