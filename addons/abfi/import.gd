@@ -199,19 +199,25 @@ func _import(
 				# check whether to add a glyph
 				if not in_glyph:
 					if color != delimiter:
-						# if we've got all specified glyphs, pass over any surplus
+						in_glyph = true
+
+						# if we're seeing surplus glyphs, don't process them
 						if glyph_i == glyphs_n:
-							glyph_surplus += 1
 							continue
 
-						in_glyph = true
 						glyph_line.push_back([x, null])
 
 				# check whether to cap off a glyph
 				elif color == delimiter:
-					# end glyph
-					glyph_line.back()[1] = x
 					in_glyph = false
+
+					# if this was a surplus glyph, increment the count
+					if glyph_i == glyphs_n:
+						glyph_surplus += 1
+						continue
+
+					# otherwise, cap it off
+					glyph_line.back()[1] = x
 					glyph_i += 1
 
 			else:
