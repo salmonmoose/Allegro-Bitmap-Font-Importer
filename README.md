@@ -2,7 +2,7 @@
 
 **Allegro Bitmap Font Importer** plugin for Godot 4.x.
 
-For Godot 3.x, use [abfi v1.3.0](https://gitlab.com/snoopdouglas/abfi/-/tree/v1.3.0).
+For Godot 3.x, use [abfi v1.3.0](https://codeberg.org/starriver/abfi/src/tag/v1.3.0).
 
 ![Diagram](./.images/diagram.png)
 
@@ -12,9 +12,9 @@ Like the included monospaced bitmap font importer, this allows you to create bit
 
 ## Installation
 
-### From GitLab
+### From Codeberg
 
-* [Download the source from the latest tag.](https://gitlab.com/snoopdouglas/abfi/-/tags)
+* [Download the source from the latest tag.](https://codeberg.org/starriver/abfi/tags)
 * Extract the `addons/` directory into your Godot project.
 * Enable the plugin in your project's settings.
 
