@@ -3,7 +3,6 @@ extends EditorImportPlugin
 
 enum Presets { DEFAULT }
 
-
 func _get_importer_name() -> String:
 	return "dt.abfi"
 
@@ -38,6 +37,10 @@ func _get_import_options(_path, preset: int) -> Array[Dictionary]:
 		{
 			name = "letter_spacing",
 			default_value = 0,
+		},
+		{
+			name = "individual_spacing",
+			default_value = PackedStringArray([""]),
 		},
 		{
 			name = "mipmaps",
@@ -236,6 +239,43 @@ func _import(
 		var total := glyphs_n + glyph_surplus
 		push_warning("More glyphs than expected (wanted %d, got %d, discarded %d)" % [glyphs_n, total, glyph_surplus])
 
+	# --- Calculate Individual Kerning
+	var kernings := (options.individual_spacing as PackedStringArray)
+	var kernings_n := kernings.size()
+
+	var kerning_pairs := {}
+
+	for i in kernings_n:
+		var r := kernings[i]
+		var len := r.length()
+
+		if len < 3:
+			push_error("kerning set must be at least 3 character long %d " % r)
+
+		if r.countn(" ") != 2:
+			push_error("kerning set must contain 2 spaces space as a delimiter %s found %s" % [r, r.countn(" ")])
+
+		var data := r.split(" ", false, 2)
+
+		var characters := data[0].split("")
+		# --- Grab kerned characters as charcodes
+		var target_characters := PackedInt64Array(
+				Array(data[1].split("")).map(
+					func(char): return char.unicode_at(0)
+				)
+			)
+		var kerning_offset := int(data[2])
+		# --- Kerning pairs are indexed on source character then kerning amount
+		for character in characters:
+			var code = character.unicode_at(0)
+			if not kerning_pairs.has(code):
+				kerning_pairs[code] = {}
+
+			if not kerning_pairs[code].has(kerning_offset):
+				kerning_pairs[code][kerning_offset] = []
+
+			kerning_pairs[code][kerning_offset].append_array(target_characters)
+
 	# --- assemble BitmapFont ---
 	var font := FontFile.new()
 
@@ -261,6 +301,14 @@ func _import(
 			font.set_glyph_texture_idx(0, size, glyph, 0)
 			font.set_glyph_offset(0, size, glyph, Vector2.ZERO)
 			font.set_glyph_size(0, size, glyph, rect.size)
+			# Loop through each character
+			for g_idx in kerning_pairs:
+				# Loop through each kerning amount
+				for k in kerning_pairs[g_idx]:
+					# Loop through each char
+					for char in kerning_pairs[g_idx][k]:
+						font.set_kerning(0, size.x, Vector2i(g_idx, char), Vector2i(k, 0))
+
 
 			glyph_i += 1
 
