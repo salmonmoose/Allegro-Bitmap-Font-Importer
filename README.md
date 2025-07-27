@@ -65,6 +65,27 @@ This is useful for padding out characters or pushing them together (if set to a 
 
 ![Letter spacing demonstration with outline font](./.images/spacing.png)
 
+### Kerning
+
+In cases where particular letter pairs may need a different spacing than the default you can add kerning for character pairs.
+This uses the same format as the Godot bitmap font format.
+
+`abc xyz -2`
+
+On the left hand side are the characters on the left hand side, each of these will be paired with all the characters on the right hand side with the third value of the kerning amount:
+
+```
+a,-2 => xyz
+b,-2 => xyz
+c,-2 => xyz
+```
+
+Multiple lines can be added for different sets, and kerning amounts, and are broken up by left hand side character and amount.
+
+![Kerning](./.images/kerning.png)
+
+See the Godot docs [Bitmap Fonts](https://docs.godotengine.org/en/latest/tutorials/ui/gui_using_fonts.html#bitmap-fonts)
+
 ### Mipmaps
 
 Enables texture mipmaps. This is useful for larger fonts, but not for pixel fonts. Leave this unchecked if you aren't sure.
