@@ -39,7 +39,7 @@ func _get_import_options(_path, preset: int) -> Array[Dictionary]:
 			default_value = 0,
 		},
 		{
-			name = "individual_spacing",
+			name = "kerning",
 			default_value = PackedStringArray([""]),
 		},
 		{
@@ -240,7 +240,7 @@ func _import(
 		push_warning("More glyphs than expected (wanted %d, got %d, discarded %d)" % [glyphs_n, total, glyph_surplus])
 
 	# --- Calculate Individual Kerning
-	var kernings := (options.individual_spacing as PackedStringArray)
+	var kernings := (options.kerning as PackedStringArray)
 	var kernings_n := kernings.size()
 
 	var kerning_pairs := {}
